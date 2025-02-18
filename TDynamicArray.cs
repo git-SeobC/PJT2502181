@@ -1,34 +1,24 @@
-using PJT2502181;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace L20250218
+namespace PJT2502181
 {
-    class DynamicArray
+    class TDynamicArray<T>
     {
-        public DynamicArray()
+        public TDynamicArray()
         {
 
         }
 
-        ~DynamicArray()
+        ~TDynamicArray()
         {
 
         }
 
-        //objects
-        //[1][2][3]
-        // ^  ^  ^  ^
-        //newObjects
-        //[1][2][3][][][]
-        //          ^
-        //objects <- newObjects 
-        //[1][2][3][4][][]
-        //          ^
-        public void Add(Object inObject)
+        public void Add(T inObject)
         {
             if (count >= objects.Length)
             {
@@ -40,10 +30,7 @@ namespace L20250218
 
         protected void ExtendSpace()
         {
-            //배열 늘이기
-            //이전 정보 옮기기
-            Object[] newObject = new Object[objects.Length * 2];
-            //이전값 이동
+            T[] newObject = new T[objects.Length * 2];
             for (int i = 0; i < objects.Length; ++i)
             {
                 newObject[i] = objects[i];
@@ -52,12 +39,11 @@ namespace L20250218
             objects = newObject;
         }
 
-        //[][][][][]
-        public bool Remove(Object removObject)
+        public bool Remove(T removObject)
         {
             for (int i = 0; i < Count; ++i)
             {
-                if (removObject == objects[i])
+                if (removObject.Equals(objects[i]))
                 {
                     return RemoveAt(i);
                 }
@@ -79,10 +65,7 @@ namespace L20250218
             return false;
         }
 
-        // [1][2][3][4]
-        // Insert(2, 5);
-        // => [1][2][3][5][4]
-        public void Insert(int pInsertIndex, Object pObject)
+        public void Insert(int pInsertIndex, T pObject)
         {
             #region 내 코드
             //Add(pObject);
@@ -111,7 +94,7 @@ namespace L20250218
             #endregion
         }
 
-        protected Object[] objects = new Object[3];
+        protected T[] objects = new T[3];
 
         protected int count = 0;
         public int Count
@@ -122,7 +105,7 @@ namespace L20250218
             }
         }
 
-        public Object this[int index]
+        public T this[int index]
         {
             get
             {
@@ -134,39 +117,6 @@ namespace L20250218
                 {
                     objects[index] = value;
                 }
-            }
-        }
-    }
-
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-
-            //[] ->                  variable
-            //[][][][][]             array -> Array
-            //[][][][][][][][][][]   DynamicArray
-            //DataStructure          자료구조
-            
-            TDynamicArray<int> a = new TDynamicArray<int>();
-            for (int i = 0; i < 10; ++i)
-            {
-                a.Add(i);
-            }
-
-            TDynamicArray<GameObject> gameObjects = new TDynamicArray<GameObject>();
-
-            GameObject testObject = new GameObject();
-            gameObjects.Add(testObject);
-            gameObjects.Remove(testObject);
-
-
-
-
-            for (int i = 0; i < a.Count; ++i)
-            {
-                Console.Write(a[i] + ", ");
             }
         }
     }
